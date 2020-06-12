@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login to admin</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.1/examples/sign-in/">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+    <!-- Custom styles for this template -->
+    <link href="{{url_for('static', filename='css/login.css')}}" rel="stylesheet">
+    <div>
+      <a class="btn btn-primary float-left" href="/">Back &larr;</a>
+    </div>
+  </head>
+  <body class="text-center">
+    <form class="form-signin" action="/dashboard" method="post">
+      <h1 class="h3 mb-3 font-weight-normal">Admin Login</h1>
+      <label for="usrname" class="sr-only">User name</label>
+      <input type="text" name="usrname" id="usrname" class="form-control" placeholder="User name" required autofocus>
+      <label for="pwd" class="sr-only">Password</label>
+      <input type="password" name="pwd" id="pwd" class="form-control" placeholder="Password" required>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <p class="mt-5 mb-3 text-muted">&copy; Kaustubh Gupta 2020</p>
+    </form>
+      </body>
+</html>
