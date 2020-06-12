@@ -3,7 +3,7 @@
   {
     "local_server": "True",
     "local_uri": "mysql://root:@localhost/kaustubhgupta",
-    "prod_uri": "mysql://root:@localhost/kaustubhgupta",
+    "prod_uri": "sqlite:///blogData.sqlite3",
     "fb_url": "https://www.facebook.com/kaustubh.gupta.1828",
     "github_url": "https://github.com/kaustubhgupta",
     "twitter_url": "https://twitter.com/Kaustubh1828",

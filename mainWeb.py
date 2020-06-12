@@ -7,7 +7,7 @@ import os
 import json
 import math
 
-local_server = True
+local_server = False
 with open('config.json', 'r') as f:
     parameter = json.load(f)["para"]
 
@@ -24,8 +24,10 @@ app.config.update(
 mail = Mail(app)
 if local_server:
     app.config['SQLALCHEMY_DATABASE_URI'] = parameter['local_uri']
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = parameter['prod_uri']
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
@@ -44,8 +46,8 @@ class Posts(db.Model):
     serial_no = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
     tagline = db.Column(db.String(50), nullable=False)
-    slug = db.Column(db.String(14), nullable=False)
-    content = db.Column(db.String(50), nullable=False)
+    slug = db.Column(db.String(50), nullable=False)
+    content = db.Column(db.String(9999), nullable=False)
     date = db.Column(db.String(12), nullable=True)
     img_file = db.Column(db.String(30), nullable=True)
 
@@ -185,10 +187,12 @@ def delete(serial_no):
         db.session.commit()
     return redirect('/dashboard')
 
+@app.route('/undercons')
+def undercons():
+    return render_template('undercons.html', par=parameter)
+
 
 if __name__ == '__main__':
+    db.create_all()
     app.run(debug=True)
 
-# New features comming soon...
-
-# checking github changes
