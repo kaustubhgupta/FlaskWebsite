@@ -71,17 +71,17 @@ def contact():
     if (request.method=='POST'):
         # adding entries to database
         name = request.form.get('name')
-        emailFor = request.form.get('email')
+        email = request.form.get('email')
         phone = request.form.get('phone')
         message = request.form.get('message')
-        entry = Contacts(name=name, phone_num=phone, msg=message, email=emailFor, date=datetime.now())
+        entry = Contacts(name=name, phone_num=phone, msg=message, email=email, date=datetime.now())
         db.session.add(entry)
         db.session.commit()
         mail.send_message(
-            subject='New message from' + name,
-            sender=emailFor,
+            subject='New message from ' + name,
+            sender=email,
             recipients=[parameter['gmail-user']],
-            body=message + "\n" + phone
+            body=message + "\n" + phone + "\n" +email
         )
 
     return render_template('contact.html', par=parameter)
