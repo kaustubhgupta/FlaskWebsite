@@ -154,7 +154,7 @@ def logout():
     return redirect('/')
 
 
-@app.route('/blogs') 
+@app.route('/blogs')
 def blogs():
     posts = Posts.query.filter_by().all()[::-1]
 
