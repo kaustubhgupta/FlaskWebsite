@@ -2,8 +2,7 @@
   "para":
   {
     "local_server": "True",
-    "local_uri": "mysql://root:@localhost/kaustubhgupta",
-    "prod_uri": "sqlite:///blogData.sqlite3",
+    "uri": "sqlite:///blogData.sqlite3",
     "fb_url": "https://www.facebook.com/kaustubh.gupta.1828",
     "github_url": "https://github.com/kaustubhgupta",
     "twitter_url": "https://twitter.com/Kaustubh1828",
@@ -12,6 +11,7 @@
     "no_of_post": 3,
     "admin_user":"yourname",
     "admin_pas": "yourpass",
-    "upload_location":"static/img"
+    "prod_upload_location":"static/img",
+    "local_upload_location":"static\\img"
   }
 }

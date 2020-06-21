@@ -9,14 +9,13 @@ import math
 from os import listdir
 from os.path import isfile, join
 
-local_server = False
+local = False
 with open('config.json', 'r') as f:
     parameter = json.load(f)["para"]
 
 app = Flask(__name__)
 app.secret_key = 'super-secret-key'
-app.config['UPLOAD_FOLDER'] = parameter['upload_location']
-mypath = app.config['UPLOAD_FOLDER']
+
 app.config.update(
     MAIL_SERVER='smtp.gmail.com',
     MAIL_PORT='465',
@@ -24,14 +23,19 @@ app.config.update(
     MAIL_USERNAME=parameter['gmail-user'],
     MAIL_PASSWORD=parameter['gmail-pass']
 )
+
+app.config['SQLALCHEMY_DATABASE_URI'] = parameter['uri']
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 mail = Mail(app)
-if local_server:
-    app.config['SQLALCHEMY_DATABASE_URI'] = parameter['local_uri']
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+if local:
+    app.config['UPLOAD_FOLDER'] = parameter['local_upload_location']
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = parameter['prod_uri']
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['UPLOAD_FOLDER'] = parameter['prod_upload_location']
+
 db = SQLAlchemy(app)
+
+mypath = app.config['UPLOAD_FOLDER']
 
 
 class Contacts(db.Model):
