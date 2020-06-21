@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect
+from flask import Flask, render_template, request, session, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_mail import Mail
@@ -6,6 +6,8 @@ from werkzeug.utils import secure_filename
 import os
 import json
 import math
+from os import listdir
+from os.path import isfile, join
 
 local_server = False
 with open('config.json', 'r') as f:
@@ -14,12 +16,13 @@ with open('config.json', 'r') as f:
 app = Flask(__name__)
 app.secret_key = 'super-secret-key'
 app.config['UPLOAD_FOLDER'] = parameter['upload_location']
+mypath = app.config['UPLOAD_FOLDER']
 app.config.update(
-    MAIL_SERVER = 'smtp.gmail.com',
-    MAIL_PORT = '465',
-    MAIL_USE_SSL = 'True',
-    MAIL_USERNAME = parameter['gmail-user'],
-    MAIL_PASSWORD = parameter['gmail-pass']
+    MAIL_SERVER='smtp.gmail.com',
+    MAIL_PORT='465',
+    MAIL_USE_SSL='True',
+    MAIL_USERNAME=parameter['gmail-user'],
+    MAIL_PASSWORD=parameter['gmail-pass']
 )
 mail = Mail(app)
 if local_server:
@@ -52,12 +55,9 @@ class Posts(db.Model):
     img_file = db.Column(db.String(30), nullable=True)
 
 
-
-
-
 @app.route('/')
 def home():
-    posts = Posts.query.filter_by().order_by(Posts.serial_no.desc())[0:4]
+    posts = Posts.query.filter_by().order_by(Posts.serial_no.desc())[0:2]
     return render_template('index.html', par=parameter, posts=posts)
 
 
@@ -68,21 +68,23 @@ def about():
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
-    if (request.method=='POST'):
+    if request.method == 'POST':
         # adding entries to database
-        name = request.form.get('name')
-        email = request.form.get('email')
-        phone = request.form.get('phone')
-        message = request.form.get('message')
-        entry = Contacts(name=name, phone_num=phone, msg=message, email=email, date=datetime.now())
-        db.session.add(entry)
-        db.session.commit()
-        mail.send_message(
-            subject='New message from ' + name,
-            sender=email,
-            recipients=[parameter['gmail-user']],
-            body=message + "\n" + phone + "\n" +email
-        )
+        if request.form.get('email')!='':
+            name = request.form.get('name')
+            email = request.form.get('email')
+            phone = request.form.get('phone')
+            message = request.form.get('message')
+            entry = Contacts(name=name, phone_num=phone, msg=message, email=email, date=datetime.now())
+            db.session.add(entry)
+            db.session.commit()
+            mail.send_message(
+                subject='New message from ' + name,
+                sender=email,
+                recipients=[parameter['gmail-user']],
+                body=message + "\n" + phone + "\n" + email)
+        else:
+            flash("Please Enter Valid Email Address", "danger")
 
     return render_template('contact.html', par=parameter)
 
@@ -102,11 +104,15 @@ def dashboard():
     if request.method == 'POST':
         username = request.form.get('usrname')
         password = request.form.get('pwd')
+
+
         if (username == parameter['admin_user'] and password == parameter['admin_pas']):
             session['user'] = username
             posts = Posts.query.all()
             return render_template('dashboard.html', par=parameter, posts=posts)
 
+        else:
+            flash("Wrong Credentials!", "danger")
     return render_template('login.html', par=parameter)
 
 
@@ -125,6 +131,7 @@ def edit(serial_no):
                 post = Posts(date=date, title=box_title, tagline=tline, slug=slug, content=content, img_file=img_file)
                 db.session.add(post)
                 db.session.commit()
+                flash("Entry Added Successfully !", "success")
             else:
                 post = Posts.query.filter_by(serial_no=serial_no).first()
                 post.title = box_title
@@ -135,8 +142,11 @@ def edit(serial_no):
                 post.date = date
                 db.session.commit()
                 return redirect('/edit/'+serial_no)
+
         post = Posts.query.filter_by(serial_no=serial_no).first()
         return render_template('edit.html', par=parameter, post=post, serial_no=serial_no)
+
+    return render_template('login.html', par=parameter)
 
 
 @app.route('/uploader', methods=['GET', 'POST'])
@@ -144,8 +154,10 @@ def uploader():
     if ('user' in session and session['user'] == parameter['admin_user']):
         if request.method == 'POST':
             fi = request.files['file1']
-            fi.save(os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(fi.filename)))
-            return "Uploaded Sucessfully"
+            fi.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(fi.filename)))
+            return redirect('/success')
+
+    return render_template('login.html', par=parameter)
 
 
 @app.route('/logout')
@@ -187,9 +199,17 @@ def delete(serial_no):
         db.session.commit()
     return redirect('/dashboard')
 
+
 @app.route('/undercons')
 def undercons():
     return render_template('undercons.html', par=parameter)
+
+
+@app.route('/success')
+def successmsg():
+    if ('user' in session and session['user'] == parameter['admin_user']):
+        file_uploaded = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+        return render_template('successMessage.html', par=parameter, file_uploaded=file_uploaded)
 
 
 if __name__ == '__main__':

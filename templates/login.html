@@ -13,19 +13,34 @@
 
     <!-- Custom styles for this template -->
     <link href="{{url_for('static', filename='css/login.css')}}" rel="stylesheet">
-    <div>
-      <a class="btn btn-primary float-left" href="/">Back &larr;</a>
-    </div>
+    
   </head>
   <body class="text-center">
+
     <form class="form-signin" action="/dashboard" method="post">
       <h1 class="h3 mb-3 font-weight-normal">Admin Login</h1>
+      {% with message = get_flashed_messages(with_categories=true) %}
+{% if message %}
+{% for category, message in message %}
+<div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+  {{message}}
+  <button type="button" class="close" data-dismiss= "alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
       <label for="usrname" class="sr-only">User name</label>
       <input type="text" name="usrname" id="usrname" class="form-control" placeholder="User name" required autofocus>
       <label for="pwd" class="sr-only">Password</label>
       <input type="password" name="pwd" id="pwd" class="form-control" placeholder="Password" required>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       <p class="mt-5 mb-3 text-muted">&copy; Kaustubh Gupta 2020</p>
+      <div>
+      <a class="btn btn-primary float-left" href="/">&larr; Back</a>
+    </div>
     </form>
+
       </body>
 </html>

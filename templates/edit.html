@@ -15,7 +15,18 @@
     </div>
   </header>
 
-
+{% with message = get_flashed_messages(with_categories=true) %}
+{% if message %}
+{% for category, message in message %}
+<div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+  {{message}}
+  <button type="button" class="close" data-dismiss= "alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
   <!-- Main Content -->
   <div class="container">
     <div class="row">
@@ -42,7 +53,7 @@
           <div class="control-group">
             <div class="form-group col-xs-12 floating-label-form-group controls">
               <label>Slug</label>
-              <input type="text" class="form-control" placeholder="Slug" id="slug" name = 'slug' value="{{post.slug}}">
+              <input type="text" class="form-control" placeholder="post-link-text" id="slug" name = 'slug' value="{{post.slug}}">
               <p class="help-block text-danger"></p>
             </div>
           </div>

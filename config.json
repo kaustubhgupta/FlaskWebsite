@@ -12,6 +12,6 @@
     "no_of_post": 3,
     "admin_user":"yourname",
     "admin_pas": "yourpass",
-    "upload_location":"..\\static\\img"
+    "upload_location":"static\\img"
   }
 }

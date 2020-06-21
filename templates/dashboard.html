@@ -8,7 +8,7 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
             <h1>Admin Panel</h1>
-            <span class="subheading">This is where magic happens</span>
+            <span class="subheading">This is where I can control all post to be posted or editing</span>
           </div>
         </div>
       </div>
@@ -20,17 +20,19 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
 
-        <h1>Tools Available</h1>
+       
        <a href="/edit/0"> <button class="btn btn-primary">Add New Post</button></a>
        <a href="/logout"> <button class="btn btn-primary">Logout</button></a>
 
         <hr>
+        <br>
+        <br>
         <h1>Upload A File</h1>
-        <form action="/uploader" method="post" enctype = 'multipart/form-data'>
+        <form action="/uploader" method="post" enctype = "multipart/form-data">
           <input type="file" name="file1">
-          <button class="btn btn-primary" type="submit">Submit</button>
+          <button class="btn btn-primary" type="submit" required>Submit</button>
         </form>
-
+<br>
         <h1>Edit Previous Post</h1>
   <table class="table">
     <thead>
@@ -55,10 +57,7 @@
     </tbody>
   </table>
         
-        <!-- Pager -->
-        <div class="clearfix">
-          <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
-        </div>
+  
       </div>
     </div>
   </div>
