@@ -9,7 +9,7 @@ import math
 from os import listdir
 from os.path import isfile, join
 
-local = False
+local = True
 with open('config.json', 'r') as f:
     parameter = json.load(f)["para"]
 
