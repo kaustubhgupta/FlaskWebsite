@@ -9,12 +9,16 @@ import math
 from os import listdir
 from os.path import isfile, join
 
-local = True
+local = False
 with open('config.json', 'r') as f:
     parameter = json.load(f)["para"]
 
 app = Flask(__name__)
 app.secret_key = 'super-secret-key'
+
+if local is not True:
+    parameter['admin_user'] = os.environ['username']
+    parameter['admin_pas'] = os.environ['password']
 
 app.config.update(
     MAIL_SERVER='smtp.gmail.com',
