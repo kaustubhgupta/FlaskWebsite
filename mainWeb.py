@@ -20,13 +20,15 @@ app = Flask(__name__)
 app.secret_key = 'super-secret-key'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 local = os.environ.get('local')
+parameter['admin_user'] = os.environ['USERNAME_ADMIN']
+parameter['admin_pas'] = os.environ['PASSWORD_ADMIN']
+
 
 if local == 'True':
     app.config['UPLOAD_FOLDER'] = parameter['local_upload_location']
     app.config['SQLALCHEMY_DATABASE_URI'] = parameter['uri']
+
 else:
-    parameter['admin_user'] = os.environ['username']
-    parameter['admin_pas'] = os.environ['password']
     app.config['UPLOAD_FOLDER'] = parameter['prod_upload_location']
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 
