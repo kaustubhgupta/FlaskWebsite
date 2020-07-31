@@ -8,7 +8,9 @@ import json
 import math
 from os import listdir
 from os.path import isfile, join
-
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 
 with open('config.json', 'r') as f:
@@ -16,12 +18,18 @@ with open('config.json', 'r') as f:
 
 app = Flask(__name__)
 app.secret_key = 'super-secret-key'
-
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 local = os.environ.get('local')
 
-if local is not (True and None):
+if local == 'True':
+    app.config['UPLOAD_FOLDER'] = parameter['local_upload_location']
+    app.config['SQLALCHEMY_DATABASE_URI'] = parameter['uri']
+else:
     parameter['admin_user'] = os.environ['username']
     parameter['admin_pas'] = os.environ['password']
+    app.config['UPLOAD_FOLDER'] = parameter['prod_upload_location']
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+
 
 app.config.update(
     MAIL_SERVER='smtp.gmail.com',
@@ -31,14 +39,7 @@ app.config.update(
     MAIL_PASSWORD=parameter['gmail-pass']
 )
 
-app.config['SQLALCHEMY_DATABASE_URI'] = parameter['uri']
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 mail = Mail(app)
-
-if local:
-    app.config['UPLOAD_FOLDER'] = parameter['local_upload_location']
-else:
-    app.config['UPLOAD_FOLDER'] = parameter['prod_upload_location']
 
 db = SQLAlchemy(app)
 
