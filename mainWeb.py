@@ -9,14 +9,17 @@ import math
 from os import listdir
 from os.path import isfile, join
 
-local = False
+
+
 with open('config.json', 'r') as f:
     parameter = json.load(f)["para"]
 
 app = Flask(__name__)
 app.secret_key = 'super-secret-key'
 
-if local is not True:
+local = os.environ.get('local')
+
+if local is not (True and None):
     parameter['admin_user'] = os.environ['username']
     parameter['admin_pas'] = os.environ['password']
 
