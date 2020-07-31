@@ -49,22 +49,22 @@ mypath = app.config['UPLOAD_FOLDER']
 class Contacts(db.Model):
     # serial_no	name	phone_num	msg	date	email
     serial_no = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
-    phone_num = db.Column(db.String(14), nullable=False)
-    msg = db.Column(db.String(200), nullable=False)
-    date = db.Column(db.String(12), nullable=True)
-    email = db.Column(db.String(50), nullable=False)
+    name = db.Column(db.String, nullable=False)
+    phone_num = db.Column(db.String, nullable=False)
+    msg = db.Column(db.String, nullable=False)
+    date = db.Column(db.String, nullable=True)
+    email = db.Column(db.String, nullable=False)
 
 
 class Posts(db.Model):
     # serial_no	title slug content date
     serial_no = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50), nullable=False)
-    tagline = db.Column(db.String(50), nullable=False)
-    slug = db.Column(db.String(50), nullable=False)
-    content = db.Column(db.String(9999), nullable=False)
-    date = db.Column(db.String(12), nullable=True)
-    img_file = db.Column(db.String(30), nullable=True)
+    title = db.Column(db.String, nullable=False)
+    tagline = db.Column(db.String, nullable=False)
+    slug = db.Column(db.String, nullable=False)
+    content = db.Column(db.String, nullable=False)
+    date = db.Column(db.String, nullable=True)
+    img_file = db.Column(db.String, nullable=True)
 
 
 @app.route('/')

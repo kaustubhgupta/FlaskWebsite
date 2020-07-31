@@ -1,2 +1,8 @@
+# pycharm files
 .idea
+
+#local configuration
 .env
+
+# local database
+blogData.sqlite3
