@@ -1,7 +1,6 @@
 {
   "para":
   {
-    "local_server": "True",
     "uri": "sqlite:///blogData.sqlite3",
     "fb_url": "https://www.facebook.com/kaustubh.gupta.1828",
     "github_url": "https://github.com/kaustubhgupta",
@@ -9,8 +8,8 @@
     "gmail-user": "your email",
     "gmail-pass": "your pass",
     "no_of_post": 3,
-    "admin_user":"yourname",
-    "admin_pas": "yourpass",
+    "admin_user":"kaustubh",
+    "admin_pas": "kaustubh",
     "prod_upload_location":"static/img",
     "local_upload_location":"static\\img"
   }
