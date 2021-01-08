@@ -1,4 +1,7 @@
 # FlaskWebsite
+
+![FlaskWebsite](https://socialify.git.ci/kaustubhgupta/FlaskWebsite/image?language=1&theme=Light&stargazers=1&description=1&pulls=1&issues=1&forks=1&owner=1)
+
 This is a blogging website build with Python as backend, frontend using bootstrap and deployed to Heroku.
 
 ## Features
