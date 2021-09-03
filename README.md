@@ -23,7 +23,7 @@ This is a blogging website build with Python as backend, frontend using bootstra
 - Bootstrap
 - Jinja Templating
 
-## Galery
+## Gallery
 
 ![image](https://user-images.githubusercontent.com/43691873/132037878-7d9e4341-341a-42ef-b097-00c3f7d92821.png)
 
