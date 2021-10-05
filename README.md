@@ -16,7 +16,7 @@
 
 ![image](https://user-images.githubusercontent.com/43691873/132037936-65563d40-ca47-44cf-a3e3-fe6b1e304e20.png)
 
-## Tech Stack
+## Tech Stack 🏟
 - Python (Flask)
 - SQLAlchemy (Local Database)
 - PostgreSQL (Production Database)
